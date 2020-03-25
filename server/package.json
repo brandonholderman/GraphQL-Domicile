@@ -1,0 +1,25 @@
+{
+  "name": "graphql-domicile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandonholderman/GraphQL-Domicile.git"
+  },
+  "author": "Brandon Holderman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandonholderman/GraphQL-Domicile/issues"
+  },
+  "homepage": "https://github.com/brandonholderman/GraphQL-Domicile#readme",
+  "dependencies": {
+    "apollo-boost": "^0.4.7",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.6.0"
+  }
+}
