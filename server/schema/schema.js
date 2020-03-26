@@ -1,8 +1,8 @@
-const graphql = ('graphql')
+const graphql = require('graphql')
 const _ = require('lodash')
 const {GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLSchema} = graphql
 
-// Dummy Data
+// Mock Data
 let buildings = [
     {name: 'CR322', nodes: {id: '1'}},
     {name: 'CR401', nodes: {id: '2'}},
@@ -27,7 +27,7 @@ const RootQuery = new GraphQLObjectType({
             type: BuildingType,
             args: {id: {type: GraphQLString}},
             resolve(parent, args){
-                // code to get data from DB / other source
+                // Gets data from DB/Source
                 return _.find(buildings, {id: args.nodes.id})
             }
         }
@@ -35,11 +35,11 @@ const RootQuery = new GraphQLObjectType({
 })
 
 
-// // Dummy Data
+// Dummy Data
 // let buildings = [
-//     {id: '1', name: CR322},
-//     {id: '2', name: CR401},
-//     {id: '3', name: CR423},
+//     {id: '1', name: 'CR322'},
+//     {id: '2', name: 'CR401'},
+//     {id: '3', name: 'CR423'},
 // ]
 
 // const BuildingType = new GraphQLObjectType({
@@ -65,6 +65,6 @@ const RootQuery = new GraphQLObjectType({
 //     }
 // })
 
-modeule.exports = new GraphQLSchema({
+module.exports = new GraphQLSchema({
     query: RootQuery
 })
