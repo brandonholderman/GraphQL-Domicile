@@ -1,5 +1,6 @@
 const graphql = require('graphql')
 const _ = require('lodash')
+
 const {
     GraphQLObjectType, 
     GraphQLInt, 
@@ -9,19 +10,6 @@ const {
     GraphQLList,
 } = graphql
 
-
-// Mock Data
-let buildings = [
-    {totalCount: 3, id: 1, name: 'CR322'},
-    {totalCount: 3, id: 2, name: 'CR401'},
-    {totalCount: 3, id: 3, name: 'CR513'},
-]
-
-// let listings = [
-//     {id: 1, name: 'CR322'},
-//     {id: 2, name: 'CR401'},
-//     {id: 3, name: 'CR513'},
-// ]
 
 const Building = new GraphQLObjectType({
     name: 'Building',
@@ -38,10 +26,11 @@ const Building = new GraphQLObjectType({
 })
 
 const Nodes = new GraphQLObjectType({
-    name: 'nodes',
+    name: 'Nodes',
     fields: () => ({
         id: {type: GraphQLID},
-        name: {type: GraphQLString}
+        name: {type: GraphQLString},
+        rooms: {type: GraphQLString}
     })
 })
 
@@ -50,10 +39,10 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         building: {
             type: Building,
-            args: {id: {type: GraphQLID}},
+            args: {totalCount: {type: GraphQLInt}},
             resolve(parent, args){
                 // Gets data from DB/Source
-                return _.find(buildings, {id: args.nodes.id})
+                return _.find(buildings, {totalCount: args.totalCount})
             }
         },
         nodes: {
@@ -69,3 +58,18 @@ const RootQuery = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
     query: RootQuery
 })
+
+
+// Mock Data
+// let buildings = [
+//     {totalCount: 3},
+//     {totalCount: 3},
+//     {totalCount: 3},
+// ]
+
+// let listings = [
+//     {id: 'CR', name: 'CR322'},
+//     {id: 'MS', name: 'MS812'},
+//     {id: 'HL', name: 'HL809'},
+// ]
+
