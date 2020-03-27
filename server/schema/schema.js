@@ -66,48 +66,6 @@ const RootQuery = new GraphQLObjectType({
     }
 })
 
-// Function to create uniquie user id
-// function create_UUID() {
-//     var dt = new Date().getTime();
-//     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//         var r = (dt + Math.random() * 16) % 16 | 0;
-//         dt = Math.floor(dt / 16);
-//         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-//     });
-//     return uuid;
-// }
-// console.log(create_UUID());
-
 module.exports = new GraphQLSchema({
     query: RootQuery
 })
-
-// Dummy Data
-// let buildings = [
-//     {id: '1', name: 'CR322'},
-//     {id: '2', name: 'CR401'},
-//     {id: '3', name: 'CR423'},
-// ]
-
-// const BuildingType = new GraphQLObjectType({
-//     name: 'Building',
-//     fields: () => ({
-//         totalCount: {type: GraphQLString},
-//         id: {type: GraphQLString},
-//         name: {type: GraphQLString},
-//     })
-// })
-
-// const RootQuery = new GraphQLObjectType({
-//     name: 'RootQueryType',
-//     fields: {
-//         building: {
-//             type: BuildingType,
-//             args: {id: {type: GraphQLString}},
-//             resolve(parent, args){
-//                 // code to get data from DB / other source
-//                 _.find(buildings, {id: args.id})
-//             }
-//         }
-//     }
-// })
