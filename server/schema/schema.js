@@ -1,5 +1,6 @@
 const graphql = require('graphql')
 const _ = require('lodash')
+
 const {
     GraphQLObjectType, 
     GraphQLInt, 
@@ -8,20 +9,6 @@ const {
     GraphQLID,
     GraphQLList,
 } = graphql
-
-
-// Mock Data
-let buildings = [
-    {totalCount: 3},
-    {totalCount: 3},
-    {totalCount: 3},
-]
-
-let listings = [
-    {id: 'CR', name: 'CR322'},
-    {id: 'MS', name: 'MS812'},
-    {id: 'HL', name: 'HL809'},
-]
 
 
 const Building = new GraphQLObjectType({
@@ -42,7 +29,8 @@ const Nodes = new GraphQLObjectType({
     name: 'Nodes',
     fields: () => ({
         id: {type: GraphQLID},
-        name: {type: GraphQLString}
+        name: {type: GraphQLString},
+        rooms: {type: GraphQLString}
     })
 })
 
@@ -70,3 +58,18 @@ const RootQuery = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
     query: RootQuery
 })
+
+
+// Mock Data
+// let buildings = [
+//     {totalCount: 3},
+//     {totalCount: 3},
+//     {totalCount: 3},
+// ]
+
+// let listings = [
+//     {id: 'CR', name: 'CR322'},
+//     {id: 'MS', name: 'MS812'},
+//     {id: 'HL', name: 'HL809'},
+// ]
+

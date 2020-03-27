@@ -1,0 +1,27 @@
+{
+    "buildings": 9,
+    "nodes": [
+        {
+            "id": "CR",
+            "name": "Chroma SLU",
+            "rooms": [
+                {
+                "id": "CR322",
+                "description": "Brand new unit facing the park",
+                "availability": [
+                    {
+                    "date": "2020-02-23",
+                    "price": "149.00",
+                    "status": "available"
+                    },
+                    {
+                        "date": "2020-02-29",
+                        "price": "149.00",
+                        "status": "available"
+                    }
+                ]
+                }
+            ]
+        }
+    ]
+}
