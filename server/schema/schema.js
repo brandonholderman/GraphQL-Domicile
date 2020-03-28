@@ -1,5 +1,6 @@
-const graphql = require('graphql')
-const _ = require('lodash')
+const mock_data = require('../data/mock_data.json');
+const graphql = require('graphql');
+const _ = require('lodash');
 
 const {
     GraphQLObjectType, 
@@ -10,23 +11,22 @@ const {
     GraphQLList,
 } = graphql
 
-
-const Building = new GraphQLObjectType({
-    name: 'Building',
+const BuildingType = new GraphQLObjectType({
+    name: 'buildings',
     fields: () => ({
         totalCount: {type: GraphQLInt},
         nodes: {
-            type: new GraphQLList(Nodes),
+            type: new GraphQLList(NodeType),
             resolve(parent, args){
                 console.log(parent)
-                return _.find((listings, {id: args.id}))
+                return _.filter(mock_data, parent.nodes.id)
             }
         }
     })
 })
 
-const Nodes = new GraphQLObjectType({
-    name: 'Nodes',
+const NodeType = new GraphQLObjectType({
+    name: 'nodes',
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
@@ -37,19 +37,19 @@ const Nodes = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        building: {
-            type: Building,
+        buildings: {
+            type: BuildingType,
             args: {totalCount: {type: GraphQLInt}},
-            resolve(parent, args){
+            resolve(parent, args) {
                 // Gets data from DB/Source
-                return _.find(buildings, {totalCount: args.totalCount})
+                return _.find(mock_data, {totalCount: args.totalCount})
             }
         },
         nodes: {
-            type: Nodes,
+            type: NodeType,
             args: { id: {type: GraphQLID} },
-            resolve(parent, args){
-                return _.find(listings, {id: args.id});
+            resolve(parent, args) {
+                return _.find(mock_data, {id: args.id});
             }
         }
     }
@@ -59,17 +59,29 @@ module.exports = new GraphQLSchema({
     query: RootQuery
 })
 
+// const Building = new GraphQLObjectType({
+//     name: 'building',
+//     fields: () => ({
+//         name: {type: GraphQLString},
+//         totalCount: {type: GraphQLInt}
+//     })
+// });
 
-// Mock Data
-// let buildings = [
-//     {totalCount: 3},
-//     {totalCount: 3},
-//     {totalCount: 3},
-// ]
+// const RootQuery = new GraphQLObjectType({
+//     name: 'RootQueryType',
+//     fields: {
+//         buildings: {
+//             type: Building,
+//             args: {name: {type: GraphQLString}},
+//             resolve(parent, args) {
+//                 // Gets data from DB/Source
+//                 console.log(args.name)
+//                 return _.find(mock_data, {name: args.name})
+//             }
+//         }
+//     }
+// });
 
-// let listings = [
-//     {id: 'CR', name: 'CR322'},
-//     {id: 'MS', name: 'MS812'},
-//     {id: 'HL', name: 'HL809'},
-// ]
-
+// module.exports = new GraphQLSchema({
+//     query: RootQuery
+// });
