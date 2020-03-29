@@ -18,8 +18,8 @@ const BuildingType = new GraphQLObjectType({
         nodes: {
             type: new GraphQLList(NodeType),
             resolve(parent, args){
-                console.log(parent)
-                return _.filter(mock_data, parent.nodes)
+                console.log(parent.nodes)
+                return parent.nodes
             }
         }
     })
@@ -41,14 +41,16 @@ const RootQuery = new GraphQLObjectType({
             type: BuildingType,
             args: {totalCount: {type: GraphQLInt}},
             resolve(parent, args) {
+                console.log(args.totalCount)
                 return _.find(mock_data, {totalCount: args.totalCount})
             }
         },
         nodes: {
             type: NodeType,
-            args: { id: {type: GraphQLID} },
+            parent: mock_data['buildings'],
             resolve(parent, args) {
-                return _.find(mock_data, {id: args.id});
+                console.log(parent)
+                return _.find(mock_data, 'nodes');
             }
         }
     }
