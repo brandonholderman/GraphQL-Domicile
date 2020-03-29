@@ -1,0 +1,52 @@
+{
+    "buildings": {
+        "name": "brandon",
+        "totalCount": 2,
+        "nodes": [
+            {
+                "id": "CR",
+                "name": "Chroma SLU",
+                "rooms": [
+                    {
+                    "id": "CR322",
+                    "description": "Brand new unit facing the park",
+                    "availability": [
+                        {
+                            "date": "2020-02-23",
+                            "price": "149.00",
+                            "status": "available"
+                        },
+                        {
+                            "date": "2020-02-29",
+                            "price": "149.00",
+                            "status": "available"
+                        }
+                    ]
+                    }
+                ]
+            },
+            {
+                "id": "MS",
+                "name": "Marina SLU",
+                "rooms": [
+                    {
+                        "id": "MS812",
+                        "description": "High floor unit with lakefront views",
+                        "availability": [
+                            {
+                                "date": "2020-06-16",
+                                "price": "259.00",
+                                "status": "unavailable"
+                            },
+                            {
+                                "date": "2020-06-16",
+                                "price": "259.00",
+                                "status": "unavailable"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
