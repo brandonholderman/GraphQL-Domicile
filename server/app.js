@@ -2,7 +2,7 @@ const express = require('express')
 const graphqlHTTP = require('express-graphql')
 const schema = require('./schema/schema')
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = 3000
 
 app.use('/graphql', graphqlHTTP({
     schema,
@@ -17,30 +17,29 @@ app.use('/graphql', graphqlHTTP({
 //     },
 //     data: {
 //     query: `query Buildings($range: DateRangeInput) {
-//         buildings {
-
-//         totalCount
-//         nodes {
-//         id
-//         name
-//         rooms {
-//         id
-//         description
-//         availability(range: $range) {
-//             date
-//             price
-//             status
-//         }
-//         }
-//         }
-//         }
-//     }`,
+//                 buildings {
+//                     totalCount
+//                     nodes {
+//                         id
+//                         name
+//                         rooms {
+//                             id
+//                             description
+//                             availability(range: $range) {
+//                                 date
+//                                 price
+//                                 status
+//                                 }           
+//                             }
+//                         }
+//                     }
+//                 }`,
 //     variables: {
 //         range: {
-//         from: `${fromDate}`,
-//         to: `${toDate}`
+//             from: `${fromDate}`,
+//             to: `${toDate}`
+//            }
 //         }
-//     }
 //     }
 // }).then((result) => {
 //     return result.data
