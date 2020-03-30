@@ -1,8 +1,20 @@
 const express = require('express')
 const graphqlHTTP = require('express-graphql')
 const schema = require('./schema/schema')
+const mongoose = require('mongoose')
 const app = express()
 const PORT = 3000
+const db_conn = 'mongodb+srv://brandon:973mdm@graphql-domicile-5sd5o.mongodb.net/test?retryWrites=true&w=majority'
+
+
+// DB Connection
+mongoose.connect(db_conn, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+mongoose.connection.once('open', () => {
+    console.log('successful connection to database')
+})
 
 app.use('/graphql', graphqlHTTP({
     schema,
@@ -47,4 +59,4 @@ app.use('/graphql', graphqlHTTP({
 //     console.log(e);
 // });
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
