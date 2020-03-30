@@ -9,6 +9,7 @@ const {
     GraphQLSchema,
     GraphQLID,
     GraphQLList,
+    GraphQLFloat,
 } = graphql
 
 const BuildingType = new GraphQLObjectType({
@@ -17,7 +18,7 @@ const BuildingType = new GraphQLObjectType({
         totalCount: {type: GraphQLInt},
         nodes: {
             type: new GraphQLList(NodeType),
-            resolve(parent, args){
+            resolve(parent, args) {
                 console.log(parent.nodes)
                 return parent.nodes
             }
@@ -30,7 +31,37 @@ const NodeType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
-        rooms: {type: GraphQLString}
+        rooms: {
+            type: new GraphQLList(RoomType),
+            resolve(parent, args) {
+                console.log(parent.rooms)
+                return parent.rooms
+            }
+        }
+    })
+})
+
+const RoomType = new GraphQLObjectType({
+    name: 'rooms',
+    fields: () => ({
+        id: {type: GraphQLID},
+        description: {type: GraphQLString},
+        availbility: {
+            type: new GraphQLList(AvailabilityType),
+            resolve(parent, args) {
+                console.log(parent.id)
+                return parent.availability
+            }
+        }
+    })
+})
+
+const AvailabilityType = new GraphQLObjectType({
+    name: 'availability',
+    fields: () => ({
+        date: {type: GraphQLString},
+        price: {type: GraphQLFloat},
+        status: {type: GraphQLString}
     })
 })
 
@@ -49,8 +80,22 @@ const RootQuery = new GraphQLObjectType({
             type: NodeType,
             parent: mock_data['buildings'],
             resolve(parent, args) {
-                console.log(parent)
+                console.log(parent.nodes)
                 return _.find(mock_data, 'nodes');
+            }
+        },
+        rooms: {
+            type: RoomType,
+            args: {id: {type: GraphQLID}},
+            resolve(parent, args) {
+                return _find(mock_data, {id: args.id})
+            }
+        },
+        availability: {
+            type: AvailabilityType,
+            args: {id: {type: GraphQLID}},
+            resolve(parent, args) {
+                return _find(mock_data, {id: args.id})
             }
         }
     }
