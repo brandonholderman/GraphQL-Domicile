@@ -2,12 +2,16 @@ const mock_data = require('../data/mock_data.json');
 const graphql = require('graphql');
 const _ = require('lodash');
 
+const Buildings = require('../models/buildings')
+const Nodes = require('../models/nodes')
+const Rooms = require('../models/rooms')
+const Availability = require('../models/availability')
+
 const {
     GraphQLObjectType, 
     GraphQLInt, 
     GraphQLString, 
     GraphQLSchema,
-    GraphQLID,
     GraphQLList,
     GraphQLFloat,
 } = graphql
@@ -29,7 +33,7 @@ const BuildingType = new GraphQLObjectType({
 const NodeType = new GraphQLObjectType({
     name: 'nodes',
     fields: () => ({
-        id: {type: GraphQLID},
+        id: {type: GraphQLString},
         name: {type: GraphQLString},
         rooms: {
             type: new GraphQLList(RoomType),
@@ -44,7 +48,7 @@ const NodeType = new GraphQLObjectType({
 const RoomType = new GraphQLObjectType({
     name: 'rooms',
     fields: () => ({
-        id: {type: GraphQLID},
+        id: {type: GraphQLString},
         description: {type: GraphQLString},
         availbility: {
             type: new GraphQLList(AvailabilityType),
@@ -64,6 +68,7 @@ const AvailabilityType = new GraphQLObjectType({
         status: {type: GraphQLString}
     })
 })
+
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -86,21 +91,43 @@ const RootQuery = new GraphQLObjectType({
         },
         rooms: {
             type: RoomType,
-            args: {id: {type: GraphQLID}},
+            args: {id: {type: GraphQLString}},
             resolve(parent, args) {
-                return _find(mock_data, {id: args.id})
+                return _.find(mock_data, {id: args.id})
             }
         },
         availability: {
             type: AvailabilityType,
-            args: {id: {type: GraphQLID}},
+            args: {id: {type: GraphQLString}},
             resolve(parent, args) {
-                return _find(mock_data, {id: args.id})
+                return _.find(mock_data, {id: args.id})
+            }
+        }
+    }
+})
+
+// Testing my mutation works
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addRoom: {
+            type: RoomType,
+            args: {
+                id: {type: GraphQLString},
+                description: {type: GraphQLString},
+            },
+            resolve(parent, args) {
+                let room = new Rooms({
+                    id: args.id,
+                    description: args.description
+                })
+                return room.save()
             }
         }
     }
 })
 
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 })
